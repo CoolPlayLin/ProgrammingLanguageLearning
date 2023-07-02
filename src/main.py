@@ -38,7 +38,7 @@ def list_to_str(List: list):
 def main():
     Commands = []
     Komac = komac(pathlib.Path(__file__).parents[0])
-    # 升级Node.js Nightly
+    # 更新 Node.js Nightly
     JSON = requests.get("https://nodejs.org/download/nightly/index.json", verify=False).json()[0]
     URL = f"https://nodejs.org/download/nightly/{ JSON['version'] }"
     Urls = [clean_string(f"{URL}/node-{JSON['version']}-{each}", {"-win": "", "-msi": ".msi"}) for each in JSON["files"] if each.find("msi") != -1]
