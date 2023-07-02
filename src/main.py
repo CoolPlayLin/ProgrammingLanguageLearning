@@ -4,9 +4,9 @@ import os, sys
 
 def komac(path: str):
     Komac = pathlib.Path(path)/"komac.jar"
-    # with open(Komac, "wb+") as f:
-    #     file = requests.get("https://gh.api-go.asia/https://github.com/russellbanks/Komac/releases/download/v1.8.0/Komac-1.8.0-all.jar", verify=False)
-    #     f.write(file.content)
+    with open(Komac, "wb+") as f:
+        file = requests.get("https://gh.api-go.asia/https://github.com/russellbanks/Komac/releases/download/v1.8.0/Komac-1.8.0-all.jar", verify=False)
+        f.write(file.content)
     return Komac
 
 def command(komac: str, id: str, urls: str, version: str, token: str) -> str:
@@ -50,7 +50,6 @@ def main():
     Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1]
     Commands.append(command(Komac, "Fndroid.ClashForWindows", list_to_str(Urls), Version, sys.argv[1]))
     del JSON, Urls, Version
-    print(Commands)
     # 更新
     for each in Commands:
          os.system(each)
