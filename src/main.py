@@ -50,6 +50,13 @@ def main():
     Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1]
     Commands.append(command(Komac, "Fndroid.ClashForWindows", list_to_str(Urls), Version, sys.argv[1]))
     del JSON, Urls, Version
+
+    # 更新 DooTask
+    JSON = requests.get("https://api.github.com/repos/kuaifan/dootask/releases/latest", verify=False).json()["assets"]
+    Version = requests.get("https://api.github.com/repos/kuaifan/dootask/releases/latest", verify=False).json()["tag_name"]
+    Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1 and each["browser_download_url"].find("blockmap") == -1]
+    Commands.append(command(Komac, "KuaiFan.DooTask", list_to_str(Urls), str_pop(Version, 0), sys.argv[1]))
+    del JSON, Urls, Version
     # 更新
     for each in Commands:
          os.system(each)
