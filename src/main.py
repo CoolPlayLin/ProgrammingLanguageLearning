@@ -63,7 +63,7 @@ def main():
     # 更新 Listen 1
     JSON = requests.get("https://api.github.com/repos/listen1/listen1_desktop/releases/latest", verify=False).json()["assets"]
     Version = requests.get("https://api.github.com/repos/listen1/listen1_desktop/releases/latest", verify=False).json()["tag_name"]
-    Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1 and each["browser_download_url"].find("ia32") != -1 and each["browser_download_url"].find("x64") != -1 and each["browser_download_url"].find("blockmap") == -1]
+    Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1 and (each["browser_download_url"].find("ia32") != -1 or each["browser_download_url"].find("x64") != -1) and each["browser_download_url"].find("blockmap") == -1]
     Commands.append(command(Komac, "listen1.listen1", list_to_str(Urls), str_pop(Version, 0), sys.argv[1]))
     del JSON, Urls, Version
 
