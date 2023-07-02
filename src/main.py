@@ -13,5 +13,5 @@ with open(Komac, "wb+") as f:
 V = list(JSON['version'])
 V.pop(0)
 V = "".join(V)
-COMMAND = "java -jar {} update --urls {} --version {} --submit --token {}".format(Komac,str(FILEs).replace("'", "").replace("[", "").replace("]", "").replace(" ", ""), V, sys.argv[1])
+COMMAND = "java -jar {} update --id OpenJS.NodeJS.Nightly --urls {} --version {} --submit --token {}".format(Komac,str(FILEs).replace("'", "").replace("[", "").replace("]", "").replace(" ", ""), V, sys.argv[1])
 os.system(COMMAND)
