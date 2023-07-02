@@ -4,9 +4,9 @@ import os, sys
 
 def komac(path: str):
     Komac = pathlib.Path(path)/"komac.jar"
-    with open(Komac, "wb+") as f:
-        file = requests.get("https://gh.api-go.asia/https://github.com/russellbanks/Komac/releases/download/v1.8.0/Komac-1.8.0-all.jar")
-        f.write(file.content)
+    # with open(Komac, "wb+") as f:
+    #     file = requests.get("https://gh.api-go.asia/https://github.com/russellbanks/Komac/releases/download/v1.8.0/Komac-1.8.0-all.jar", verify=False)
+    #     f.write(file.content)
     return Komac
 
 def command(komac: str, id: str, urls: str, version: str, token: str) -> str:
@@ -26,23 +26,31 @@ def str_pop(string: str, index: int)-> str:
         return i
 
 def list_to_str(List: list):
-    i = 0
-    while True:
-         i += 1
-         if i != len(List) -1:
-              List.insert(i, ",")
-         else:
-              break
-    return "".join(List)
+    new = str(List)
+    new = clean_string(new, {
+         "[": "",
+         "]": "",
+         " ": "",
+         "'": ""
+    })
+    return new
 
 def main():
     Commands = []
     Komac = komac(pathlib.Path(__file__).parents[0])
     # 升级Node.js Nightly
-    JSON = requests.get("https://nodejs.org/download/nightly/index.json").json()[0]
+    JSON = requests.get("https://nodejs.org/download/nightly/index.json", verify=False).json()[0]
     URL = f"https://nodejs.org/download/nightly/{ JSON['version'] }"
     Urls = [clean_string(f"{URL}/node-{JSON['version']}-{each}", {"-win": "", "-msi": ".msi"}) for each in JSON["files"] if each.find("msi") != -1]
     Commands.append(command(Komac, "OpenJS.NodeJS.Nightly", list_to_str(Urls),str_pop(JSON['version'], 0), sys.argv[1]))
+    del JSON, URL, Urls
+    # 更新 Clash for Windows
+    JSON = requests.get("https://api.github.com/repos/Fndroid/clash_for_windows_pkg/releases/latest", verify=False).json()["assets"]
+    Version = requests.get("https://api.github.com/repos/Fndroid/clash_for_windows_pkg/releases/latest", verify=False).json()["tag_name"]
+    Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1]
+    Commands.append(command(Komac, "Fndroid.ClashForWindows", list_to_str(Urls), Version, sys.argv[1]))
+    del JSON, Urls, Version
+    print(Commands)
     # 更新
     for each in Commands:
          os.system(each)
