@@ -25,6 +25,16 @@ def str_pop(string: str, index: int)-> str:
 
         return i
 
+def list_to_str(List: list):
+    i = 0
+    while True:
+         i += 1
+         if i != len(List) -1:
+              List.insert(i, ",")
+         else:
+              break
+    return "".join(List)
+
 def main():
     Commands = []
     Komac = komac(pathlib.Path(__file__).parents[0])
@@ -32,8 +42,7 @@ def main():
     JSON = requests.get("https://nodejs.org/download/nightly/index.json").json()[0]
     URL = f"https://nodejs.org/download/nightly/{ JSON['version'] }"
     Urls = [clean_string(f"{URL}/node-{JSON['version']}-{each}", {"-win": "", "-msi": ".msi"}) for each in JSON["files"] if each.find("msi") != -1]
-    Commands.append(command(Komac, "OpenJS.NodeJS.Nightly", Urls,str_pop(JSON['version'], 0), sys.argv[1]))
-
+    Commands.append(command(Komac, "OpenJS.NodeJS.Nightly", list_to_str(Urls),str_pop(JSON['version'], 0), sys.argv[1]))
     # 更新
     for each in Commands:
          os.system(each)
