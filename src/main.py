@@ -40,32 +40,48 @@ def main():
     Komac = komac(pathlib.Path(__file__).parents[0])
 
     # 更新 Node.js Nightly
+    id = "OpenJS.NodeJS.Nightly"
     JSON = requests.get("https://nodejs.org/download/nightly/index.json", verify=False).json()[0]
     URL = f"https://nodejs.org/download/nightly/{ JSON['version'] }"
     Urls = [clean_string(f"{URL}/node-{JSON['version']}-{each}", {"-win": "", "-msi": ".msi"}) for each in JSON["files"] if each.find("msi") != -1]
-    Commands.append(command(Komac, "OpenJS.NodeJS.Nightly", list_to_str(Urls),str_pop(JSON['version'], 0), sys.argv[1]))
-    del JSON, URL, Urls
+    if requests.get(f"https://winget.vercel.app/api/winget-pkg-versions?pkgid={id}").json()[id].find(str_pop(JSON['version'], 0)) != -1:
+         print(f"{Version} has already existed, skip publishing")
+    else:
+        Commands.append(command(Komac, id, list_to_str(Urls),str_pop(JSON['version'], 0), sys.argv[1]))
+    del JSON, URL, Urls, id
 
     # 更新 Clash for Windows
+    id = "https://winget.vercel.app/api/winget-pkg-versions?pkgid=Fndroid.ClashForWindows"
     JSON = requests.get("https://api.github.com/repos/Fndroid/clash_for_windows_pkg/releases/latest", verify=False).json()["assets"]
     Version = requests.get("https://api.github.com/repos/Fndroid/clash_for_windows_pkg/releases/latest", verify=False).json()["tag_name"]
     Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1]
-    Commands.append(command(Komac, "Fndroid.ClashForWindows", list_to_str(Urls), Version, sys.argv[1]))
-    del JSON, Urls, Version
+    if requests.get(f"https://winget.vercel.app/api/winget-pkg-versions?pkgid={id}").json()[id].find(Version) != -1:
+         print(f"{Version} has already existed, skip publishing")
+    else:
+        Commands.append(command(Komac, id, list_to_str(Urls), Version, sys.argv[1]))
+    del JSON, Urls, Version, id
 
     # 更新 DooTask
+    id = "KuaiFan.DooTask"
     JSON = requests.get("https://api.github.com/repos/kuaifan/dootask/releases/latest", verify=False).json()["assets"]
     Version = requests.get("https://api.github.com/repos/kuaifan/dootask/releases/latest", verify=False).json()["tag_name"]
     Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1 and each["browser_download_url"].find("blockmap") == -1]
-    Commands.append(command(Komac, "KuaiFan.DooTask", list_to_str(Urls), str_pop(Version, 0), sys.argv[1]))
-    del JSON, Urls, Version
+    if requests.get(f"https://winget.vercel.app/api/winget-pkg-versions?pkgid={id}").json()[id].find(str_pop(Version, 0)) != -1:
+         print(f"{Version} has already existed, skip publishing")
+    else:
+        Commands.append(command(Komac, id, list_to_str(Urls), str_pop(Version, 0), sys.argv[1]))
+    del JSON, Urls, Version, id
 
     # 更新 Listen 1
+    id = "listen1.listen1"
     JSON = requests.get("https://api.github.com/repos/listen1/listen1_desktop/releases/latest", verify=False).json()["assets"]
     Version = requests.get("https://api.github.com/repos/listen1/listen1_desktop/releases/latest", verify=False).json()["tag_name"]
     Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1 and (each["browser_download_url"].find("ia32") != -1 or each["browser_download_url"].find("x64") != -1 or each["browser_download_url"].find("arm64") != -1) and each["browser_download_url"].find("blockmap") == -1]
-    Commands.append(command(Komac, "listen1.listen1", list_to_str(Urls), str_pop(Version, 0), sys.argv[1]))
-    del JSON, Urls, Version
+    if requests.get(f"https://winget.vercel.app/api/winget-pkg-versions?pkgid={id}").json()[id].find(str_pop(Version, 0)) != -1:
+         print(f"{Version} has already existed, skip publishing")
+    else:
+        Commands.append(command(Komac, id, list_to_str(Urls), str_pop(Version, 0), sys.argv[1]))
+    del JSON, Urls, Version, id
 
     # 更新
     for each in Commands:
