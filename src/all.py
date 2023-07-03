@@ -24,6 +24,8 @@ def main():
     if not debug:
         for each in Commands:
             os.system(each)
+            print("sleep 5s")
+            sleep(5)
     print(Commands)
 
 if __name__ == "__main__":
