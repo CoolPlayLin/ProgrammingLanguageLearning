@@ -51,7 +51,7 @@ def main():
     URL = f"https://nodejs.org/download/nightly/{ JSON['version'] }"
     Urls = [clean_string(f"{URL}/node-{JSON['version']}-{each}", {"-win": "", "-msi": ".msi"}) for each in JSON["files"] if each.find("msi") != -1]
     if version_verify(str_pop(JSON['version'], 0), id):
-         print(f"{Version} has already existed, skip publishing")
+         print(f"{JSON['version'], 0} has already existed, skip publishing")
     else:
         Commands.append(command(Komac, id, list_to_str(Urls),str_pop(JSON['version'], 0), sys.argv[1]))
     del JSON, URL, Urls, id
