@@ -17,8 +17,6 @@ def main():
         else:
             Commands.append(command(Komac, id, list_to_str(Urls),str_pop(JSON['version'], 0), sys.argv[1]))
         del URL, Urls
-        print("sleep 5s")
-        sleep(5)
 
     # 更新
     if not debug:
