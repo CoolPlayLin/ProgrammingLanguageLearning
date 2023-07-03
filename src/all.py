@@ -16,7 +16,7 @@ def main():
             print(f"{JSON['version']} has already existed, skip publishing")
         else:
             Commands.append(command(Komac, id, list_to_str(Urls),str_pop(JSON['version'], 0), sys.argv[1]))
-        del JSON, URL, Urls, id
+        del URL, Urls
         print("sleep 5s")
         sleep(5)
 
