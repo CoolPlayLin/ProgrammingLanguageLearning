@@ -57,7 +57,7 @@ def main():
     del JSON, URL, Urls, id
 
     # 更新 Clash for Windows
-    id = "https://winget.vercel.app/api/winget-pkg-versions?pkgid=Fndroid.ClashForWindows"
+    id = "Fndroid.ClashForWindows"
     JSON = requests.get("https://api.github.com/repos/Fndroid/clash_for_windows_pkg/releases/latest", verify=False).json()["assets"]
     Version = requests.get("https://api.github.com/repos/Fndroid/clash_for_windows_pkg/releases/latest", verify=False).json()["tag_name"]
     Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1]
