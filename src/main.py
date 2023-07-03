@@ -36,7 +36,7 @@ def list_to_str(List: list):
     return new
 
 def version_verify(version: str, id: str) -> bool:
-    if [v for v in requests.get(f"https://winget.vercel.app/api/winget-pkg-versions?pkgid={id}").json()[id] if version == v] > 0:
+    if len([v for v in requests.get(f"https://winget.vercel.app/api/winget-pkg-versions?pkgid={id}").json()[id] if version == v]) > 0:
         return False
     else:
         return True
