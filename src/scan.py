@@ -1,8 +1,9 @@
 import os
 import pathlib
+import yaml
+import requests
 
 def find_installers(path: pathlib.Path, files: list) -> None:
-    print(len(files))
     if path.is_file():
         if path.stem.find("installer") != -1:
             files.append(path)
@@ -29,8 +30,17 @@ def main():
     PATHs = get_manifest_path()[0]
     Files = []
     find_installers(PATHs, Files)
-    print(Files)
-    return Files
+    for m in Files:
+        with open(m, "r", encoding="utf-8") as f:
+            Manifest = yaml.load(f.read(), yaml.Loader)
+            for url in Manifest["Installers"]:
+                try:
+                    if requests.get(url["InstallerUrl"]).status_code > 401:
+                        print("Scanning Fail")
+                    else:
+                        print("Scanning Pass")
+                except:
+                    continue
 
 if __name__ == "__main__":
     main()
