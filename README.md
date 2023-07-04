@@ -8,6 +8,7 @@ create an issue to add your software publish to winget easily
 - [DooTask](https://github.com/kuaifan/dootask)
 - [Listen 1](https://github.com/listen1/listen1_desktop/)
 - [Node.js Nightly](https://nodejs.org/download/nightly/)
+- [PicGo](https://github.com/Molunerfinn/PicGo)
 
 # License
 

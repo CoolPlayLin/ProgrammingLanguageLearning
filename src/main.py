@@ -97,6 +97,28 @@ def main():
         Commands.append(command(Komac, id, list_to_str(Urls), str_pop(Version, 0), sys.argv[1]))
     del JSON, Urls, Version, id
 
+    # 更新 PicGo
+    id = "PicGo.PicGo"
+    JSON = requests.get("https://api.github.com/repos/Molunerfinn/PicGo/releases/latest", verify=False, headers=Headers[1]).json()["assets"]
+    Version = requests.get("https://api.github.com/repos/Molunerfinn/PicGo/releases/latest", verify=False, headers=Headers[1]).json()["tag_name"]
+    Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1 and each["browser_download_url"].find("blockmap") == -1]
+    if not version_verify(str_pop(Version, 0), id):
+         print(f"{Version} has already existed, skip publishing")
+    else:
+        Commands.append(command(Komac, id, list_to_str(Urls), str_pop(Version, 0), sys.argv[1]))
+    del JSON, Urls, Version, id
+
+    # 更新 PicGo Beta
+    id = "PicGo.PicGo"
+    JSON = requests.get("https://api.github.com/repos/Molunerfinn/PicGo/releases", verify=False, headers=Headers[1]).json()[0]["assets"]
+    Version = requests.get("https://api.github.com/repos/Molunerfinn/PicGo/releases", verify=False, headers=Headers[1]).json()[0]["tag_name"]
+    Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1 and each["browser_download_url"].find("blockmap") == -1]
+    if not version_verify(str_pop(Version, 0), id):
+         print(f"{Version} has already existed, skip publishing")
+    else:
+        Commands.append(command(Komac, id, list_to_str(Urls), str_pop(Version, 0), sys.argv[1]))
+    del JSON, Urls, Version, id
+
     # 更新
     if not debug:
         for each in Commands:
