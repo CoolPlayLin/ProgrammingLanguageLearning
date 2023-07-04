@@ -109,7 +109,7 @@ def main():
     del JSON, Urls, Version, id
 
     # 更新 PicGo Beta
-    id = "PicGo.PicGo"
+    id = "PicGo.PicGo.Beta"
     JSON = requests.get("https://api.github.com/repos/Molunerfinn/PicGo/releases", verify=False, headers=Headers[1]).json()[0]["assets"]
     Version = requests.get("https://api.github.com/repos/Molunerfinn/PicGo/releases", verify=False, headers=Headers[1]).json()[0]["tag_name"]
     Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1 and each["browser_download_url"].find("blockmap") == -1]
