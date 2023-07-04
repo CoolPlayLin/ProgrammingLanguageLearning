@@ -79,7 +79,7 @@ def check(url) -> None:
 
 def main():
     PATHs = get_manifest_path()[0]
-    task = TaskManager(0)
+    task = TaskManager(3)
     Files = []
     find_installers(PATHs, Files)
     for m in Files:
