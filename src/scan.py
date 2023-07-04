@@ -18,7 +18,7 @@ class TaskManager:
     def run(self) -> bool:
         try:
             while self.status:
-                if len(self.task['0']) == 0:
+                if len(self.task['0'][0]) == 0:
                     break
                 for id in self.task:
                     self.died_task.extend(
@@ -84,7 +84,7 @@ def main():
     find_installers(PATHs, Files)
     for m in Files:
         with open(m, "r", encoding="utf-8") as f:
-            Manifest = yaml.load(f.read(), yaml.Loader)
+            Manifest = yaml.load(f.read(), yaml.safe_load)
             for url in Manifest["Installers"]:
                 task.AddTask(Thread(target=check, kwargs=dict(url=url["InstallerUrl"])), 0)
     task.run()
