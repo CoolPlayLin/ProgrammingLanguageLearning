@@ -6,7 +6,7 @@ def komac(path: str, debug: bool = False):
     Komac = pathlib.Path(path)/"komac.jar"
     if not debug:
         with open(Komac, "wb+") as f:
-            file = requests.get("https://gh.api-go.asia/https://github.com/russellbanks/Komac/releases/download/v1.8.0/Komac-1.8.0-all.jar", verify=False)
+            file = requests.get("https://gh.api-go.asia/https://github.com/russellbanks/Komac/releases/download/v1.8.1/Komac-1.8.1-all.jar", verify=False)
             f.write(file.content)
     return Komac
 
