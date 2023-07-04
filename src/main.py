@@ -101,7 +101,7 @@ def main():
     id = "PicGo.PicGo"
     JSON = requests.get("https://api.github.com/repos/Molunerfinn/PicGo/releases/latest", verify=False, headers=Headers[1]).json()["assets"]
     Version = requests.get("https://api.github.com/repos/Molunerfinn/PicGo/releases/latest", verify=False, headers=Headers[1]).json()["tag_name"]
-    Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1 and each["browser_download_url"].find("blockmap") == -1]
+    Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1 and each["browser_download_url"].find("blockmap") == -1 and (each["browser_download_url"].find("ia32") != -1 or each["browser_download_url"].find("x64") != -1)]
     if not version_verify(str_pop(Version, 0), id):
          print(f"{Version} has already existed, skip publishing")
     else:
@@ -112,7 +112,7 @@ def main():
     id = "PicGo.PicGo.Beta"
     JSON = requests.get("https://api.github.com/repos/Molunerfinn/PicGo/releases", verify=False, headers=Headers[1]).json()[0]["assets"]
     Version = requests.get("https://api.github.com/repos/Molunerfinn/PicGo/releases", verify=False, headers=Headers[1]).json()[0]["tag_name"]
-    Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1 and each["browser_download_url"].find("blockmap") == -1]
+    Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1 and each["browser_download_url"].find("blockmap") == -1 and (each["browser_download_url"].find("ia32") != -1 or each["browser_download_url"].find("x64") != -1)]
     if not version_verify(str_pop(Version, 0), id):
          print(f"{Version} has already existed, skip publishing")
     else:
