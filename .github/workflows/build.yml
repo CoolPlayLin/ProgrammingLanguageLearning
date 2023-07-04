@@ -1,7 +1,7 @@
 name: Auto Publish
 on:
  workflow_dispatch:
- schedule: [{cron: 0/30 * * * *}]
+ schedule: [{cron: 0 * * * *}]
 jobs:
   publish:
     runs-on: ubuntu-latest
