@@ -84,7 +84,7 @@ def main():
     find_installers(PATHs, Files)
     for m in Files:
         with open(m, "r", encoding="utf-8") as f:
-            Manifest = yaml.load(f.read(), yaml.safe_load)
+            Manifest = yaml.load(f.read(), yaml.Loader)
             for url in Manifest["Installers"]:
                 task.AddTask(Thread(target=check, kwargs=dict(url=url["InstallerUrl"])), 0)
     task.run()
