@@ -1,4 +1,4 @@
-name: Auto Publish (Test)
+name: Scan Unavailable Manifest
 on:
  workflow_dispatch:
 
@@ -6,6 +6,12 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.3
+        with:
+          repository: 'microsoft/winget-pkgs'
+      - name: Setup
+        run: cd ../
       - name: Checkout
         uses: actions/checkout@v3.5.3
       - name: Setup Python
@@ -20,4 +26,4 @@ jobs:
       - name: Setup Env
         run: python3 -m pip install -r requirements.txt
       - name: Publish
-        run: python3 src/all.py ${{ secrets.TOKEN }}
+        run: python3 src/scan.py ${{ secrets.TOKEN }}
