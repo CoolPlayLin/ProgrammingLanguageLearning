@@ -85,9 +85,11 @@ def main():
     for m in Files:
         with open(m, "r", encoding="utf-8") as f:
             Manifest = yaml.load(f.read(), yaml.Loader)
-            print(Manifest)
-            for url in Manifest["Installers"]:
-                task.AddTask(Thread(target=check, kwargs=dict(url=url["InstallerUrl"])), 0)
+            if not Manifest.get("Installers") == None:
+                for url in Manifest["Installers"]:
+                    task.AddTask(Thread(target=check, kwargs=dict(url=url["InstallerUrl"])), 0)
+            else:
+                continue
     task.run()
 
 if __name__ == "__main__":
