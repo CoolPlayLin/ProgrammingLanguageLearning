@@ -3,6 +3,7 @@ import pathlib
 import yaml
 import requests
 from threading import Thread
+import random
 
 class TaskManager:
     __slots__ = ("task", "status", "task_limit", "died_task")
@@ -80,8 +81,14 @@ def check(url) -> None:
 def main():
     PATHs = get_manifest_path()[0]
     task = TaskManager(3)
+    _Files = []
+    find_installers(PATHs, _Files)
     Files = []
-    find_installers(PATHs, Files)
+    for each in range(300):
+        Index = random.randint(0, len(_Files) - 1)
+        Files.append(_Files[Index])
+        _Files.pop(Index)
+    print(f"We have chose the following manifests: \n{str(Files)}")
     for m in Files:
         try:
             with open(m, "r", encoding="utf-8") as f:
