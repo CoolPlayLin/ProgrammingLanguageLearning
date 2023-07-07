@@ -53,16 +53,16 @@ def main():
         "Authorization": f"Bearer {sys.argv[1]}"
     }]
 
-    # 更新 Node.js Nightly
-    id = "OpenJS.NodeJS.Nightly"
-    JSON = requests.get("https://nodejs.org/download/nightly/index.json", verify=False, headers=Headers[0]).json()[0]
-    URL = f"https://nodejs.org/download/nightly/{ JSON['version'] }"
-    Urls = [clean_string(f"{URL}/node-{JSON['version']}-{each}", {"-win": "", "-msi": ".msi"}) for each in JSON["files"] if each.find("msi") != -1]
-    if not version_verify(str_pop(JSON['version'], 0), id):
-         print(f"{JSON['version']} has already existed, skip publishing")
-    else:
-        Commands.append(command(Komac, id, list_to_str(Urls),str_pop(JSON['version'], 0), sys.argv[1]))
-    del JSON, URL, Urls, id
+    # # 更新 Node.js Nightly
+    # id = "OpenJS.NodeJS.Nightly"
+    # JSON = requests.get("https://nodejs.org/download/nightly/index.json", verify=False, headers=Headers[0]).json()[0]
+    # URL = f"https://nodejs.org/download/nightly/{ JSON['version'] }"
+    # Urls = [clean_string(f"{URL}/node-{JSON['version']}-{each}", {"-win": "", "-msi": ".msi"}) for each in JSON["files"] if each.find("msi") != -1]
+    # if not version_verify(str_pop(JSON['version'], 0), id):
+    #      print(f"{JSON['version']} has already existed, skip publishing")
+    # else:
+    #     Commands.append(command(Komac, id, list_to_str(Urls),str_pop(JSON['version'], 0), sys.argv[1]))
+    # del JSON, URL, Urls, id
 
     # 更新 Clash for Windows
     id = "Fndroid.ClashForWindows"
