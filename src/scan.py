@@ -90,7 +90,7 @@ def main():
     _Files:list[pathlib.Path] = []
     find_installers(PATHs, _Files)
     Files:list[pathlib.Path] = []
-    for each in range(300):
+    for each in range(150):
         Index = random.randint(0, len(_Files) - 1)
         Files.append(_Files[Index])
         _Files.pop(Index)
