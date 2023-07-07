@@ -113,7 +113,7 @@ def main():
     JSON = requests.get("https://api.github.com/repos/Molunerfinn/PicGo/releases", verify=False, headers=Headers[1]).json()[0]["assets"]
     Version = requests.get("https://api.github.com/repos/Molunerfinn/PicGo/releases", verify=False, headers=Headers[1]).json()[0]["tag_name"]
     Urls = [each["browser_download_url"] for each in JSON if each["browser_download_url"].find("exe") != -1 and each["browser_download_url"].find("blockmap") == -1 and (each["browser_download_url"].find("ia32") != -1 or each["browser_download_url"].find("x64") != -1)]
-    if not version_verify(str_pop(Version, 0), id):
+    if not version_verify(str_pop(Version, 0), id) or Version == requests.get("https://api.github.com/repos/Molunerfinn/PicGo/releases/latest", verify=False, headers=Headers[1]).json()["tag_name"]:
          print(f"{Version} has already existed, skip publishing")
     else:
         Commands.append(command(Komac, id, list_to_str(Urls), str_pop(Version, 0), sys.argv[1]))
