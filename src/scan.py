@@ -71,19 +71,25 @@ def get_manifest_path() -> list[pathlib.Path]:
                 PATH.append(path)
     return PATH
 
-def check(url) -> None:
+def check(url, path: pathlib.Path) -> None:
     print(f"Starting Check: {url}")
     if requests.get(url).status_code >= 401:
         print(f"{url} Scanning Fail\n")
+        try:
+            os.removedirs(path)
+            print("Delete successfully")
+        except BaseException as e:
+            print(f"Delete fail: {e}")
     else:
         print(f"{url} Scanning Pass\n")
 
 def main():
     PATHs = get_manifest_path()[0]
+    print(PATHs)
     task = TaskManager(3)
-    _Files = []
+    _Files:list[pathlib.Path] = []
     find_installers(PATHs, _Files)
-    Files = []
+    Files:list[pathlib.Path] = []
     for each in range(300):
         Index = random.randint(0, len(_Files) - 1)
         Files.append(_Files[Index])
@@ -94,9 +100,9 @@ def main():
             with open(m, "r", encoding="utf-8") as f:
                 Manifest = yaml.load(f.read(), yaml.Loader)
                 for url in Manifest["Installers"]:
-                    task.AddTask(Thread(target=check, kwargs=dict(url=url["InstallerUrl"])), 0)
-        except BaseException:
-            continue
+                    task.AddTask(Thread(target=check, kwargs=dict(url=url["InstallerUrl"], path=m)), 0)
+        except BaseException as e:
+            print(f"Getting an error: {e}")
     task.run()
 
 if __name__ == "__main__":

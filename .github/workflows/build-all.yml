@@ -23,5 +23,27 @@ jobs:
           java-version: '17'
       - name: Setup Env
         run: python3 -m pip install -r requirements.txt
-      - name: Publish
+      - name: Scan
         run: python3 src/scan.py ${{ secrets.TOKEN }}
+      - name: Get Time
+        id: time
+        uses: nanzm/get-time-action@v2.0
+        with:
+          timeZone: 8
+          format: "YYYYMMDDHHmmss"
+      - name: Commit
+        id: commit
+        run:
+          cd winget-pkgs
+          if [[ -n $(git status -s) ]]; then
+          git config --global user.email ${{ vars.COOLPLAYLIN_BOT_EMAIL }}
+          git config --global user.name ${{ vars.COOLPLAYLIN_BOT_NAME }}
+          git remote set-url own https://github.com/CoolPlayLin/winget-pkgs.git
+          git checkout -b patch-${{ steps.time.outputs.time }}
+          git add .
+          git commit -m "Delete Unavailable Manifests"
+          echo "status=Changed" >> "$GITHUB_OUTPUT"
+          git push --set-upstream own patch-${{ steps.time.outputs.time }}
+          fi
+      - name: Open PR
+        run: echo "Pass"
