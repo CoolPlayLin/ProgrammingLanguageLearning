@@ -38,8 +38,8 @@ jobs:
         run:
           cd winget-pkgs
           if [[ -n $(git status -s) ]]; then
-          git config --global user.email ${{ vars.COOLPLAYLIN_BOT_EMAIL }}
-          git config --global user.name ${{ vars.COOLPLAYLIN_BOT_NAME }}
+          git config --global user.email coolplaylin@qq.com
+          git config --global user.name CoolPlayLin
           git remote set-url own https://github.com/CoolPlayLin/winget-pkgs.git
           git checkout -b patch-${{ steps.time.outputs.time }}
           git add .
