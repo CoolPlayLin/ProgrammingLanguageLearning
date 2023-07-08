@@ -36,16 +36,16 @@ jobs:
       - name: Commit
         id: commit
         run:
-          cd winget-pkgs
-          if [[ -n $(git status -s) ]]; then
-          git config --global user.email coolplaylin@qq.com
-          git config --global user.name CoolPlayLin
-          git remote set-url own https://github.com/CoolPlayLin/winget-pkgs.git
-          git checkout -b patch-${{ steps.time.outputs.time }}
-          git add .
-          git commit -m "Delete Unavailable Manifests"
-          echo "status=Changed" >> "$GITHUB_OUTPUT"
-          git push --set-upstream own patch-${{ steps.time.outputs.time }}
-          fi
+         cd winget-pkgs
+         if [[ -n $(git status -s) ]]; then
+         git config --global user.email coolplaylin@qq.com
+         git config --global user.name CoolPlayLin
+         git remote set-url own https://github.com/CoolPlayLin/winget-pkgs.git
+         git checkout -b patch-${{ steps.time.outputs.time }}
+         git add .
+         git commit -m "Delete Unavailable Manifests"
+         echo "status=Changed" >> "$GITHUB_OUTPUT"
+         git push --set-upstream own patch-${{ steps.time.outputs.time }}
+         fi
       - name: Open PR
         run: echo "Pass"
