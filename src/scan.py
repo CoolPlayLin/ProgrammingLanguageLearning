@@ -90,11 +90,10 @@ def main():
     _Files:list[pathlib.Path] = []
     find_installers(PATHs, _Files)
     Files:list[pathlib.Path] = []
-    for each in range(150):
+    for each in range(100):
         Index = random.randint(0, len(_Files) - 1)
         Files.append(_Files[Index])
         _Files.pop(Index)
-    print(f"We have chose the following manifests: \n{str(Files)}")
     for m in Files:
         try:
             with open(m, "r", encoding="utf-8") as f:
